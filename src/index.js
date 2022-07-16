@@ -6,8 +6,9 @@ const app = express()
 const port = process.env.PORT || 3000
 const db = require('./config/db')
 const route = require('./routes')
-const path = require('path');
-const twilio = require('twilio');
+const path = require('path')
+const twilio = require('twilio')
+const cors = require('cors')
 
 console.log(port);
 // Connect to DataBase;
@@ -21,6 +22,7 @@ app.engine('hbs', engine({
 app.set("view engine", 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.use(morgan('combined'))
+app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 
 
