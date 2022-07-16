@@ -4,21 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --inspect ./src/index.js",
+    "start": "node --inspect ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "config": "^3.3.7",
+    "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
+    "faker": "^6.6.6",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.19",
     "twilio": "^3.79.0"
   },
   "devDependencies": {
-    "mongoose": "^6.4.4",
-    "nodemon": "^2.0.19"
+    "mongoose": "^6.4.4"
   }
 }

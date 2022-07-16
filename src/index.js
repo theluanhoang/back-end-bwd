@@ -1,14 +1,15 @@
+require('dotenv').config()
 const express = require('express')
 const { engine } = require('express-handlebars')
 const morgan = require('morgan')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const db = require('./config/db')
 const route = require('./routes')
 const path = require('path');
 const twilio = require('twilio');
 
-
+console.log(port);
 // Connect to DataBase;
 db.connect()
 

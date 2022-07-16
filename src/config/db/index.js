@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
+require('dotenv').config()
+
+let username = process.env.MONGO_USER
+let password = process.env.MONGO_PASSWORD
+let http = `mongodb+srv://${username}:${password}@tc-covid.evjlnjx.mongodb.net/tc-covid?retryWrites=true&w=majority`
 
 async function connect() {
     try {
-        await mongoose.connect(`mongodb+srv://luantrum27:htl27062003@tc-covid.evjlnjx.mongodb.net/tc-covid?retryWrites=true&w=majority`, {
+        await mongoose.connect(http, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
