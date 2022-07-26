@@ -19,6 +19,17 @@ class PatientIdControllers {
         res.send(result);
     }
 
+    // [GET] /
+    async show(req, res) {
+        let patientID = await PatientId.find();
+        if (patientID.length > 0) {
+            res.send(patientID);
+        }
+        else {
+            res.send("No IDCard found");
+        }
+    }
+
 }
 
 module.exports = new PatientIdControllers
