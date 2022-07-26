@@ -6,7 +6,8 @@ const Doctor = new Schema({
     IdCard: {type: String, maxlength: 255},
     phoneNumber: {type: String, maxlength: 255},
     role: {type: String, maxlength: 255},
-    password: {type: String}
+    password: {type: String},
+    image: {type: String}
 }, {
     timestamps: true,
 });
