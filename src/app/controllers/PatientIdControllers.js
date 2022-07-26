@@ -5,12 +5,7 @@ class PatientIdControllers {
     // [GET] /check
     async check(req, res) {
         let patientId = await PatientId.findOne({IdCard: req.body.IdCard});
-        if (patientId.length > 0) {
-            res.send(patientId.status);
-        }
-        else {
-            res.send(patientId.status);
-        }
+        res.send(patientId.status);
     }
 
     async add(req, res) {
