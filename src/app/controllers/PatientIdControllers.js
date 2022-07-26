@@ -5,7 +5,12 @@ class PatientIdControllers {
     // [GET] /check
     async check(req, res) {
         let patientId = await PatientId.findOne({IdCard: req.body.IdCard});
-        res.send(patientId.status);
+        if (patientId.status === false) {
+            res.send("IdCard have already run!");
+        }
+        else {
+            res.send("IdCard not found");
+        }
     }
 
     async add(req, res) {
