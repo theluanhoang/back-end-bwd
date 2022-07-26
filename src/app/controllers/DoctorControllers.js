@@ -4,9 +4,9 @@ class DoctorControllers {
 
     // [POST] /signup
     async signup(req, res) {
-        let doctor = new Doctor(req.body)
-        let result = await doctor.save()
-        res.send(result)
+        // let doctor = new Doctor(req.body)
+        // let result = await doctor.save()
+        res.send(req.body)
     }
 
     // [GET] /
