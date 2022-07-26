@@ -9,7 +9,7 @@ class PatientIdControllers {
             res.send(patientId.status);
         }
         else {
-            res.send(req.body.IdCard);
+            res.send(patientId.status);
         }
     }
 
