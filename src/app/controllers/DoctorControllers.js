@@ -9,10 +9,6 @@ class DoctorControllers {
         res.send(result)
     }
 
-    test(req, res) {
-
-    }
-
     // [GET] /
     async show(req, res) {
         let doctors = await Doctor.find();
@@ -20,7 +16,7 @@ class DoctorControllers {
             res.send(doctors);
         }
         else {
-            res.send("No products found");
+            res.send("No doctors found");
         }
     }
 
