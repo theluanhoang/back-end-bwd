@@ -9,6 +9,22 @@ class DoctorControllers {
         res.send(result)
     }
 
+    // [POST] /signup
+    async login(req, res) {
+        if (req.body.IdCard && req.body.password) {
+            let doctor = await Doctor.findOne(req.body).select("-password");
+            if (doctor) {
+              res.send(doctor);
+            }
+            else {
+              res.send('Not found');
+            }
+          }
+          else {
+            res.send('Not found');
+          }
+    }
+
     // [GET] /
     async show(req, res) {
         let doctors = await Doctor.find();
