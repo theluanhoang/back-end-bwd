@@ -11,16 +11,18 @@ class UserControllers {
 
     async sendQR(req, res) {
         const sid = 'AC9cbaaef6bcd414a7557c613ee65290a1'
-        const auth_token = '5abef8103def345fa643ba5b381bfed7'
+        const auth_token = '8898cb3229f2e8b6d1244a7b53f3266b'
         const twilio = require('twilio')(sid, auth_token)
+        let otp = Math.floor(Math.random() * 999999) + 100000;
 
-        twilio.messages.create({
-            from: "+13187082606",
-            to: '+84379124695',
-            body: 'OTP: 185324'
-        })
-            .then((res) => console.log('message has sent!'))
-            .catch((err) => console.log(err))
+        res.send(otp)
+        // twilio.messages.create({
+        //     from: "+13187082606",
+        //     to: '+84379124695',
+        //     body: 'OTP: 185324'
+        // })
+        //     .then((res) => console.log('message has sent!'))
+        //     .catch((err) => console.log(err))
     }
 
     // [GET] /
