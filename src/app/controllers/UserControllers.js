@@ -13,7 +13,7 @@ class UserControllers {
         const sid = 'AC9cbaaef6bcd414a7557c613ee65290a1'
         const auth_token = '8898cb3229f2e8b6d1244a7b53f3266b'
         const twilio = require('twilio')(sid, auth_token)
-        let otp = Math.floor(Math.random() * 999999) + 100000;
+        let otp = await Math.floor(Math.random() * 999999) + 100000;
 
         res.send(otp)
         // twilio.messages.create({
