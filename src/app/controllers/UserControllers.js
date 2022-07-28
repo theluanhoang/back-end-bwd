@@ -11,7 +11,7 @@ class UserControllers {
 
     sendQR(req, res) {
         const sid = 'AC9cbaaef6bcd414a7557c613ee65290a1'
-        const auth_token = '8898cb3229f2e8b6d1244a7b53f3266b'
+        const auth_token = '7e1533788ec27e6c90f9258493771477'
         const twilio = require('twilio')(sid, auth_token)
         let otp = Math.floor(Math.random() * 999999) + 100000;
 
