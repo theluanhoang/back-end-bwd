@@ -14,15 +14,15 @@ class DoctorControllers {
         if (req.body.IdCard && req.body.password) {
             let doctor = await Doctor.findOne(req.body).select("-password");
             if (doctor) {
-              res.send(doctor);
+                res.send(doctor);
             }
             else {
-              res.send('Not found');
+                res.send('Not found');
             }
-          }
-          else {
+        }
+        else {
             res.send('Not found');
-          }
+        }
     }
 
     // [GET] /
