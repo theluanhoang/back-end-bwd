@@ -17,11 +17,11 @@ class DoctorControllers {
                 res.send(doctor);
             }
             else {
-                res.send('Not found');
+                res.send('false');
             }
         }
         else {
-            res.send('Not found');
+            res.send('false');
         }
     }
 
