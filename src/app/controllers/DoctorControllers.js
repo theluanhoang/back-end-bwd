@@ -17,7 +17,8 @@ class DoctorControllers {
                 to: '+84379124695',
                 body: `OTP: ${otp}`
             })
-            res.send(otp)
+                .then(() => res.send(otp))
+                .catch((err) => console.log(err))
         }
         else {
             res.send('false')
