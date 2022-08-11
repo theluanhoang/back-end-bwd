@@ -2,7 +2,7 @@ const Room = require("../models/Room")
 
 class RoomControllers {
 
-    async create(res, req) {
+    async create(req, res) {
         let room = new Room({
             RoomID: req.body.RoomID,
             RoomMaster: req.body.RoomMaster,
