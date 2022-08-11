@@ -46,7 +46,7 @@ class RoomControllers {
             {
                 $set: {
                     Data: [
-                        ...user,
+                        ...Data,
                         user
                     ]
                 }
