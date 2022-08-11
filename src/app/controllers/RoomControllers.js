@@ -13,6 +13,16 @@ class RoomControllers {
         }
     }
 
+    async show(req, res) {
+        let rooms = await Room.find();
+        if (rooms.length > 0) {
+            res.send(rooms);
+        }
+        else {
+            res.send("No rooms found");
+        }
+    }
+
 }
 
 module.exports = new RoomControllers
