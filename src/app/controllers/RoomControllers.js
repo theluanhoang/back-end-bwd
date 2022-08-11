@@ -41,7 +41,7 @@ class RoomControllers {
         })
         let _result = await user.save();
 
-        let result = await Product.updateOne(
+        let result = await Room.updateOne(
             { RoomID: req.params.RoomID },
             {
                 $set: {
