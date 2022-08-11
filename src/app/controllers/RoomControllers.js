@@ -1,4 +1,5 @@
-const Room = require("../models/Room")
+const Room = require("../models/Room");
+const User = require("../models/User");
 
 class RoomControllers {
 
@@ -21,6 +22,36 @@ class RoomControllers {
         else {
             res.send("No rooms found");
         }
+    }
+
+    async add(req, res) {
+        let user = new User({
+            IdCard: req.body.IdCard,
+            phoneNumber: req.body.phoneNumber,
+            name: req.body.name,
+            gender: req.body.gender,
+            address: req.body.address,
+            province: req.body.province,
+            district: req.body.district,
+            wards: req.body.wards,
+            nationality: req.body.nationality,
+            phoneNumber: req.body.phoneNumber,
+            ethnic: req.body.ethnic,
+            dateOfBirth: req.body.dateOfBirth,
+        })
+        let _result = await user.save();
+
+        let result = await Product.updateOne(
+            { RoomID: req.params.RoomID },
+            {
+                $set: {
+                    Data: [
+                        user
+                    ]
+                }
+            }
+        )
+        res.send(result);
     }
 
 }
