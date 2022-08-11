@@ -44,12 +44,8 @@ class RoomControllers {
         let result = await Room.updateOne(
             { RoomID: req.params.RoomID },
             {
-                $set: {
-                    Data: [
-                        {
-                            user
-                        }
-                    ]
+                $addToSet: {
+                    Data: user
                 }
             }
         )
