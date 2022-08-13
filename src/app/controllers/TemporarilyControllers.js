@@ -41,8 +41,6 @@ class TemporarilyControllers {
 
     // [GET] Gửi tin nhắn
     sendRejection(req, res) {
-        const dateStart = req.body.NgayBatDauTamVang;
-        const dateEnd = req.body.NgayKetThucTamVang;
         const sid = 'AC9cbaaef6bcd414a7557c613ee65290a1'
         const auth_token = '2d399a856684220cd1fcd1e381c9217f'
         const twilio = require('twilio')(sid, auth_token)
