@@ -7,7 +7,6 @@ const Temporarily = new Schema({
     SDT: {type: String, maxlength: 255},
     HoTen: {type: String, maxlength: 255},
     GioiTinh: {type: String, maxlength: 255},
-    NoiOHienTai: {type: String, maxlength: 255},
     NgaySinh: {type: String, maxlength: 255},
     NoiTamTru: {type: String, maxlength: 255},
     NoiThuongTru: {type: String, maxlength: 255},
