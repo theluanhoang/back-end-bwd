@@ -3,6 +3,7 @@ const patientIdRouter = require('./patientId')
 const userRouter = require('./users')
 const roomRouter = require('./rooms')
 const temporarilyRouter = require('./temporarily')
+const stayingRouter = require('./staying')
 
 function route(app) {
     app.use('/doctors', doctorsRouter)
@@ -10,6 +11,7 @@ function route(app) {
     app.use('/users', userRouter)
     app.use('/rooms', roomRouter)
     app.use('/temporarily', temporarilyRouter)
+    app.use('/staying', stayingRouter)
 }
 
 module.exports = route
