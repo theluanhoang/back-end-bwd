@@ -5,6 +5,7 @@ const temporarilyControllers = require('../app/controllers/TemporarilyController
 
 router.post('/signup', temporarilyControllers.signup)
 router.post('/sendSMS', temporarilyControllers.sendSMS)
+router.get('/sendRejection', temporarilyControllers.sendRejection)
 router.get('/', temporarilyControllers.show)
 
 module.exports = router
