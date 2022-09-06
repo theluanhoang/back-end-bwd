@@ -45,7 +45,6 @@ class StayingControllers {
         const auth_token = '2d399a856684220cd1fcd1e381c9217f'
         const twilio = require('twilio')(sid, auth_token)
         let otp = Math.floor(Math.random() * 999999) + 100000;
-
         twilio.messages.create({
             from: "+13187082606",
             to: '+84379124695',

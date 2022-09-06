@@ -25,7 +25,7 @@ class DoctorControllers {
         }
     }
 
-    // [POST] /signup
+    // [POST] /login
     async login(req, res) {
         if (req.body.IdCard && req.body.password) {
             let doctor = await Doctor.findOne(req.body).select("-password");
