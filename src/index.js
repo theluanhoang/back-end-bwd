@@ -6,7 +6,6 @@ const port = process.env.PORT || 3000
 const db = require('./config/db')
 const route = require('./routes')
 const cors = require('cors')
-const Doctor = require('./app/models/Doctor')
 
 // Connect to DataBase;
 db.connect()
