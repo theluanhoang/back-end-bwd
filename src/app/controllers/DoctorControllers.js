@@ -69,6 +69,7 @@ class DoctorControllers {
     }
     sendSMS(req, res) {
         let otp = Math.floor(Math.random() * 999999) + 100000;
+        let str = req.body.phoneNumber + ": " + otp;
         res.send(otp);
     }
 }
