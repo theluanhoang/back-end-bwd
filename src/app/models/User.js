@@ -15,7 +15,7 @@ const User = new Schema({
     numberBHYT: {type: String, maxlength: 255},
     ethnic: {type: String, maxlength: 255},
     dateOfBirth: {type: String, maxlength: 255},
-    // status: {type: String, maxlength: 255},
+    status: {type: String, maxlength: 255},
 }, {
     timestamps: true,
 });
