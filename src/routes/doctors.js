@@ -5,8 +5,8 @@ const doctorControllers = require('../app/controllers/DoctorControllers')
 
 router.post('/signup', doctorControllers.signup)
 router.post('/login', doctorControllers.login)
-router.get('/', doctorControllers.show)
-router.get('/sendOTP', doctorControllers.sendOTP)
 router.post('/sendSMS', doctorControllers.sendSMS)
+router.put('/02/:IdCard', doctorControllers.finish)
+router.get('/', doctorControllers.show)
 
 module.exports = router

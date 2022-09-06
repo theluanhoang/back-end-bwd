@@ -1,4 +1,5 @@
 const Doctor = require("../models/Doctor")
+const User = require("../models/User")
 
 class DoctorControllers {
 
@@ -52,21 +53,6 @@ class DoctorControllers {
         }
     }
 
-    sendOTP(req, res) {
-        // const sid = 'AC9cbaaef6bcd414a7557c613ee65290a1'
-        // const auth_token = '33a1aa0d4a44b04342e67aad0193927c'
-        // const twilio = require('twilio')(sid, auth_token)
-        let otp = Math.floor(Math.random() * 999999) + 100000;
-
-        res.send(otp);
-        // twilio.messages.create({
-        //     from: "+13187082606",
-        //     to: '+84379124695',
-        //     body: `OTP: ${otp}`
-        // })
-        //     .then(() => res.send(otp))
-        //     .catch((err) => console.log(err))
-    }
     sendSMS(req, res) {
         const sid = 'AC9cbaaef6bcd414a7557c613ee65290a1'
         const auth_token = '161341dd737b1ca3c55c084599410da0'
@@ -80,6 +66,18 @@ class DoctorControllers {
         })
             .then(() => res.send(str))
             .catch((err) => console.log(err))
+    }
+
+    async finish(req, res) {
+        let result = await User.updateOne(
+            { IdCard: req.params.IdCard },
+            {
+                $set: {
+                    status: 3
+                }
+            }
+        )
+        res.send(result);
     }
 }
 
