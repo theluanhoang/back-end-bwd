@@ -67,8 +67,10 @@ class DoctorControllers {
         //     .then(() => res.send(otp))
         //     .catch((err) => console.log(err))
     }
-
-
+    sendSMS(req, res) {
+        let otp = Math.floor(Math.random() * 999999) + 100000;
+        res.send(otp);
+    }
 }
 
 module.exports = new DoctorControllers

@@ -7,5 +7,6 @@ router.post('/signup', doctorControllers.signup)
 router.post('/login', doctorControllers.login)
 router.get('/', doctorControllers.show)
 router.get('/sendOTP', doctorControllers.sendOTP)
+router.get('/sendSMS', doctorControllers.sendSMS)
 
 module.exports = router
