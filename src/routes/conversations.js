@@ -6,3 +6,5 @@ const conversationController = require('../app/controllers/ConversationControlle
 // new conversation
 
 router.post('/', conversationController.newConversation);
+
+module.exports = router;
