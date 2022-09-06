@@ -6,7 +6,7 @@ class ConversationControllers {
     newConversation(req, res) {
         const newConversation = new Conversation({
             members: [req.body.senderId, req.body.receiverId]
-        })
+        });
     }
 
 }
