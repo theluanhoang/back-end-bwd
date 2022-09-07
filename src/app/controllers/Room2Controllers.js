@@ -1,5 +1,7 @@
-const User = require('../models/User');
-class Room2Controllers {
+const Room2 = require("../models/Room2");
+const User = require("../models/User");
+
+class RoomControllers {
 
     async show(req, res) {
         let rooms = await Room2.find();
@@ -27,6 +29,7 @@ class Room2Controllers {
             res.send(false);
         }
     }
+
 }
 
-module.exports = Room2Controllers
+module.exports = new RoomControllers
