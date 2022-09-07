@@ -48,7 +48,7 @@ class RoomControllers {
 
     async handlerGetUser(req, res) {
         let result = await User.find();
-        if (result.lenght > 0) {
+        if (result) {
             res.send(result);
         }
         else {
