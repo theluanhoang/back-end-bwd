@@ -30,6 +30,32 @@ class RoomControllers {
         }
     }
 
+    async updateStatus(req, res) {
+        let result = await User.updateOne(
+            { IdCard: req.params.IdCard },
+            {
+                $set: {
+                    status: 'wait'
+                }
+            }
+        )
+        res.send(result);
+    }
+
+    async getFirstUser(req, res) {
+
+    }
+
+    async handlerGetUser(req, res) {
+        let result = await User.find();
+        if (result.lenght > 0) {
+            res.send(result);
+        }
+        else {
+            res.send('Không có móng nào!!!')
+        }
+    }
+
 }
 
 module.exports = new RoomControllers
