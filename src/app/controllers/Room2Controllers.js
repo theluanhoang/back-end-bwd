@@ -49,8 +49,8 @@ class RoomControllers {
     async handlerGetUser(req, res) {
         let result = await User.find();
         if (result) {
-            result.forEach((user, index) => {
-                res.send(index)
+            result.map((user, index) => {
+                res.send(index);
             })
         }
         else {
