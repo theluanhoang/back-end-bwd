@@ -25,26 +25,23 @@ class RoomControllers {
     }
 
     async add(req, res) {
-        let user = new Doctor({
-            IdCard: req.body.IdCard,
-            phoneNumber: req.body.phoneNumber,
-            name: req.body.name,
-            gender: req.body.gender,
-            address: req.body.address,
-            dateOfBirth: req.body.dateOfBirth,
-            role: req.body.role,
-            image: req.body.image
-        })
+        let doctor = Doctor.findOne({ IdCard: req.body.IdCard });
 
-        let result = await Room.updateOne(
-            { RoomID: req.params.RoomID },
-            {
-                $addToSet: {
-                    Data: user
+        if (doctor) {
+            let result = await Room.updateOne(
+                { RoomID: req.params.RoomID },
+                {
+                    $addToSet: {
+                        Data: doctor
+                    }
                 }
-            }
-        )
-        res.send(result);
+            )
+            res.send(result);
+        }
+        else {
+            res.send(false);
+        }
+
     }
 
 }
