@@ -25,7 +25,8 @@ class RoomControllers {
     }
 
     async add(req, res) {
-        let doctor = Doctor.findOne({ IdCard: req.body.IdCard });
+
+        let doctor = await Doctor.findOne({ IdCard: req.body.IdCard });
 
         if (doctor) {
             let result = await Room.updateOne(
@@ -36,7 +37,7 @@ class RoomControllers {
                     }
                 }
             )
-            res.send(result);
+            res.send(doctor);
         }
         else {
             res.send(false);
