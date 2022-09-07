@@ -1,5 +1,5 @@
 const Room = require("../models/Room");
-const User = require("../models/User");
+const Doctor = require("../models/Doctor");
 
 class RoomControllers {
 
@@ -25,21 +25,16 @@ class RoomControllers {
     }
 
     async add(req, res) {
-        let user = new User({
+        let user = new Doctor({
             IdCard: req.body.IdCard,
             phoneNumber: req.body.phoneNumber,
             name: req.body.name,
             gender: req.body.gender,
             address: req.body.address,
-            province: req.body.province,
-            district: req.body.district,
-            wards: req.body.wards,
-            nationality: req.body.nationality,
-            phoneNumber: req.body.phoneNumber,
-            ethnic: req.body.ethnic,
             dateOfBirth: req.body.dateOfBirth,
+            role: req.body.role,
+            image: req.body.image
         })
-        let _result = await user.save();
 
         let result = await Room.updateOne(
             { RoomID: req.params.RoomID },
