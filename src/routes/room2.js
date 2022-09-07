@@ -5,6 +5,6 @@ const room2Controllers = require('../app/controllers/Room2Controllers')
 
 router.post('/add-user', room2Controllers.add)
 router.put('/:IdCard', room2Controllers.updateStatus)
-router.put('/', room2Controllers.handlerGetUser)
+router.get('/', room2Controllers.handlerGetUser)
 
 module.exports = router
