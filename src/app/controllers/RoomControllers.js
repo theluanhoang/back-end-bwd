@@ -42,7 +42,6 @@ class RoomControllers {
         else {
             res.send(false);
         }
-
     }
 
 }
