@@ -16,14 +16,16 @@ class Room2Controllers {
     }
 
     async add(req, res) {
-        let room = await Room.findOne({ RoomId: req.body.RoomId });
+        let roomId = req.body.RoomId
+        let idCard = req.body.IdCard
+        let room = await Room.findOne({ RoomId: roomId });
         if (room) {
-            let room2 = await Room2.findOne({ RoomId: req.body.RoomId });
+            let room2 = await Room2.findOne({ RoomId: roomId });
             if (room2) {
-                let user = await User.findOne({ IdCard: req.body.IdCard });
+                let user = await User.findOne({ IdCard: idCard });
                 if (user) {
                     let result = await Room2.updateOne(
-                        { RoomId: req.body.RoomId },
+                        { RoomId: roomId },
                         {
                             $addToSet: {
                                 Data: user
@@ -37,16 +39,16 @@ class Room2Controllers {
                 }
             } else {
                 let newRoom2 = new Room2({
-                    RoomId: req.body.RoomId
+                    RoomId: roomId
                 })
 
                 let result = await newRoom2.save();
 
                 if (result) {
-                    let user = await User.findOne({ IdCard: req.body.IdCard });
+                    let user = await User.findOne({ IdCard: idCard });
                     if (user) {
                         let result = await Room2.updateOne(
-                            { RoomId: req.body.RoomId },
+                            { RoomId: roomId },
                             {
                                 $addToSet: {
                                     Data: user
@@ -67,14 +69,12 @@ class Room2Controllers {
         }
         else {
             res.send("Không tìm thấy phòng");
-        } const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+        } 
+        const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
         const updateDocument = {
             $set: { "Data.$.status": "02" }
         };
         const result = await Room2.updateOne(query, updateDocument);
-        if (result) {
-            res.send(firstUser);
-        }
     }
 
     async finish(req, res) {
@@ -98,7 +98,7 @@ class Room2Controllers {
                     }
                 )
                 let statusUser = (userRoom2.Data)[0].status
-                if (statusUser == '02') {
+                if (statusUser == 'wait') {
                     let updatedRoom3 = await Room3.updateOne(
                         { RoomId: req.body.RoomId },
                         {
@@ -138,15 +138,17 @@ class Room2Controllers {
             }
         }
 
-        // Xóa người dùng khỏi room2
-        const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
-        const updateDocument = {
-            $set: { "Data.$.status": "03" }
-        };
-        const result = await Room3.updateOne(query, updateDocument);
-        if (result) {
-            res.send(firstUser);
-        }
+        // Xóa người dùng khỏi room 2
+        let removeUser = await Room2.updateOne(
+            { RoomId: roomId },
+            {
+                $pull: {
+                    Data: {
+                        IdCard: idCard
+                    }
+                }
+            }
+        )
     }
 
     async getFirstUser(req, res) {
@@ -157,7 +159,7 @@ class Room2Controllers {
             let user, firstUser
             let users = room2.Data;
             for (user of users) {
-                if (user.status != '02') {
+                if (user.status != 'wait') {
                     firstUser = user
                     idCard = user.IdCard
                     break;
@@ -166,7 +168,7 @@ class Room2Controllers {
             if (firstUser) {
                 const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
                 const updateDocument = {
-                    $set: { "Data.$.status": "02" }
+                    $set: { "Data.$.status": "wait" }
                 };
                 const result = await Room2.updateOne(query, updateDocument);
                 if (result) {
@@ -178,7 +180,14 @@ class Room2Controllers {
             }
         }
         else {
-            res.send(false)
+            res.send(false);
+        }
+    }
+
+    async getListUser(req, res) {
+        let room2 = await Room2.find();
+        if (room2) {
+            res.send(room2)
         }
     }
 
