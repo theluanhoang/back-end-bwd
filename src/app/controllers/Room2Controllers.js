@@ -1,8 +1,9 @@
 const Room2 = require("../models/Room2");
+const Room3 = require("../models/Room3");
 const Room = require("../models/Room");
 const User = require("../models/User");
 
-class RoomControllers {
+class Room2Controllers {
 
     async show(req, res) {
         let rooms = await Room2.find();
@@ -66,34 +67,89 @@ class RoomControllers {
         }
         else {
             res.send("Không tìm thấy phòng");
+        } const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+        const updateDocument = {
+            $set: { "Data.$.status": "02" }
+        };
+        const result = await Room2.updateOne(query, updateDocument);
+        if (result) {
+            res.send(firstUser);
         }
     }
 
     async finish(req, res) {
-        let result = await User.updateOne(
-            { IdCard: req.params.IdCard },
-            {
-                $set: {
-                    status: '03'
+        let roomId = req.body.RoomId
+        let idCard = req.body.IdCard
+
+        // thêm người dùng vào phòng ba
+        // --------------------------------------------------------------------------
+        let room3 = await Room3.findOne({ RoomId: roomId })
+        if (room3) {
+            let user = await User.findOne({ IdCard: idCard })
+            if (user) {
+                let userRoom2 = await Room2.findOne(
+                    { RoomId: roomId },
+                    {
+                        Data: {
+                            $elemMatch: {
+                                IdCard: idCard
+                            }
+                        }
+                    }
+                )
+                let statusUser = (userRoom2.Data)[0].status
+                if (statusUser == '02') {
+                    let updatedRoom3 = await Room3.updateOne(
+                        { RoomId: req.body.RoomId },
+                        {
+                            $addToSet: {
+                                Data: user
+                            }
+                        }
+                    )
+                    if (updatedRoom3) {
+                        res.send(true);
+                    }
+                    else {
+                        res.send(false);
+                    }
+                }
+                else {
+                    res.send('Theo tuần tự')
                 }
             }
-        )
-        res.send(result);
-    }
-
-    static async updateStatus(IdCard) {
-        let result = await User.updateOne(
-            { IdCard: IdCard },
-            {
-                $set: {
-                    status: 'wait'
-                }
+            else {
+                res.send('Không tìm thấy người tiêm chủng')
             }
-        )
-        return result;
+        }
+        else {
+            let user = await User.findOne({ IdCard: idCard })
+            if (user) {
+                let newRoom3 = await Room3({
+                    RoomId: roomId,
+                    Data: user
+                });
+
+                let createdRoom3 = await newRoom3.save()
+                res.send(createdRoom3);
+            }
+            else {
+                res.send('Không có user');
+            }
+        }
+
+        // Xóa người dùng khỏi room2
+        const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+        const updateDocument = {
+            $set: { "Data.$.status": "03" }
+        };
+        const result = await Room3.updateOne(query, updateDocument);
+        if (result) {
+            res.send(firstUser);
+        }
     }
 
-    async handlerGetUser(req, res) {
+    async getFirstUser(req, res) {
         let idCard
         let roomId = req.params.RoomId
         let room2 = await Room2.findOne({ RoomId: roomId });
@@ -101,24 +157,31 @@ class RoomControllers {
             let user, firstUser
             let users = room2.Data;
             for (user of users) {
-                if (user.status != 'wait') {
+                if (user.status != '02') {
                     firstUser = user
                     idCard = user.IdCard
                     break;
                 }
             }
             if (firstUser) {
-                console.log(roomId)
-                const query = { "RoomId" : `${roomId}` ,"Data.IdCard" : `${idCard}` }
+                const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
                 const updateDocument = {
-                  $set: { "Data.$.status": "wait" }
+                    $set: { "Data.$.status": "02" }
                 };
-                const result = await Room2.updateOne(query, updateDocument);                
-                res.send(firstUser);
+                const result = await Room2.updateOne(query, updateDocument);
+                if (result) {
+                    res.send(firstUser);
+                }
             }
+            else {
+                res.send(false);
+            }
+        }
+        else {
+            res.send(false)
         }
     }
 
 }
 
-module.exports = new RoomControllers
+module.exports = new Room2Controllers

@@ -27,11 +27,12 @@ class RoomControllers {
 
     async add(req, res) {
 
-        let doctor = await Doctor.findOne({ IdCard: req.body.IdCard });
-
+        let roomId = req.body.RoomID
+        let idCard = req.body.IdCard
+        let doctor = await Doctor.findOne({ IdCard: idCard });
         if (doctor) {
             let result = await Room.updateOne(
-                { RoomID: req.params.RoomID },
+                { RoomID: roomId },
                 {
                     $addToSet: {
                         Data: doctor
