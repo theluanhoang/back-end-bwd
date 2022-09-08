@@ -7,6 +7,7 @@ class RoomControllers {
         let room = new Room({
             RoomID: req.body.RoomID,
             RoomMaster: req.body.RoomMaster,
+            IdCard: req.body.IdCard
         })
         let result = await room.save()
         if (result) {
