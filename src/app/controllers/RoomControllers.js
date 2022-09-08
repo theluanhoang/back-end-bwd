@@ -4,7 +4,6 @@ const Doctor = require("../models/Doctor");
 class RoomControllers {
 
     async create(req, res) {
-        let check = await Room.findOne({ RoomID: req.body.RoomID });
         let room = new Room({
             RoomID: req.body.RoomID,
             RoomMaster: req.body.RoomMaster,
