@@ -1,4 +1,5 @@
 const Room2 = require("../models/Room2");
+const Room = require("../models/Room");
 const User = require("../models/User");
 
 class RoomControllers {
@@ -14,47 +15,101 @@ class RoomControllers {
     }
 
     async add(req, res) {
+        let room = await Room.findOne({ RoomId: req.body.RoomId });
+        if (room) {
+            let room2 = await Room2.findOne({ RoomId: req.body.RoomId });
+            if (room2) {
+                let user = await User.findOne({ IdCard: req.body.IdCard });
+                if (user) {
+                    let result = await Room2.updateOne(
+                        { RoomId: req.body.RoomId },
+                        {
+                            $addToSet: {
+                                Data: user
+                            }
+                        }
+                    )
+                    res.send(result)
+                }
+                else {
+                    res.send("Không tìm thấy user");
+                }
+            } else {
+                let newRoom2 = new Room2({
+                    RoomId: req.body.RoomId
+                })
 
-        let user = await User.findOne({ IdCard: req.body.IdCard });
+                let result = await newRoom2.save();
 
-        if (user) {
-            let roomData = new Room2({
-                Data: user,
-            })
+                if (result) {
+                    let user = await User.findOne({ IdCard: req.body.IdCard });
+                    if (user) {
+                        let result = await Room2.updateOne(
+                            { RoomId: req.body.RoomId },
+                            {
+                                $addToSet: {
+                                    Data: user
+                                }
+                            }
+                        )
+                        res.send(result)
+                    }
+                    else {
+                        res.send("Không tìm thấy user");
+                    }
+                }
+                else {
+                    res.send("Tạo phòng 2 không thành công");
+                }
+            }
 
-            let result = await roomData.save();
-            res.send(user);
         }
         else {
-            res.send(false);
+            res.send("Không tìm thấy phòng");
         }
     }
 
-    async updateStatus(req, res) {
+    async finish(req, res) {
         let result = await User.updateOne(
             { IdCard: req.params.IdCard },
             {
                 $set: {
-                    status: 'wait'
+                    status: '03'
                 }
             }
         )
         res.send(result);
     }
 
-    async getFirstUser(req, res) {
-
+    static async updateStatus(IdCard) {
+        let result = await User.updateOne(
+            { IdCard: IdCard },
+            {
+                $set: {
+                    status: 'wait'
+                }
+            }
+        )
+        return result;
     }
 
     async handlerGetUser(req, res) {
-        let result = await User.find();
-        if (result) {
-            result.map((user, index) => {
-                res.send(index);
-            })
-        }
-        else {
-            res.send('Không có móng nào!!!')
+        let data = []
+        let room2 = await Room2.findOne({ RoomId: req.params.RoomId });
+        if (room2) {
+            let users = room2.Data;
+            if (users.length > 0) {
+                users.forEach(async (user, index) => {
+                    if (user.status != 'wait') {
+                        user.status = 'wait';
+                    }
+                    data.push(user);
+                })
+                console.log("End")
+            }
+            else {
+                res.send('Không có móng nào!!!')
+            }
         }
     }
 
