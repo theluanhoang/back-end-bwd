@@ -5,19 +5,14 @@ class RoomControllers {
 
     async create(req, res) {
         let check = await Room.findOne({ RoomID: req.body.RoomID });
-        if (check) {
-            let room = new Room({
-                RoomID: req.body.RoomID,
-                RoomMaster: req.body.RoomMaster,
-                IdCard: req.body.IdCard
-            })
-            let result = await room.save()
-            if (result) {
-                res.send(result);
-            }
-        }
-        else {
-            res.send(false);
+        let room = new Room({
+            RoomID: req.body.RoomID,
+            RoomMaster: req.body.RoomMaster,
+            IdCard: req.body.IdCard
+        })
+        let result = await room.save()
+        if (result) {
+            res.send(result);
         }
     }
 
