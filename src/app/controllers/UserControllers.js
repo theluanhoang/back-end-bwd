@@ -6,7 +6,7 @@ class UserControllers {
     async signup(req, res) {
         let user = new User(req.body)
         let result = await user.save()
-        res.send(result)
+        res.send(result);
     }
 
     sendQR(req, res) {
