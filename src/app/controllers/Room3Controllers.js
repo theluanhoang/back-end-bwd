@@ -18,7 +18,7 @@ class Room3Controllers {
             if (firstUser) {
                 const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
                 const updateDocument = {
-                    $set: { "Data.$.status": "wait" }
+                    $set: { "Data.$.status": "success" }
                 };
                 const result = await Room3.updateOne(query, updateDocument);
                 if (result) {
