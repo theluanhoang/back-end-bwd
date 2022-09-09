@@ -30,8 +30,7 @@ class RoomControllers {
         let roomId = req.body.RoomID
         let idCard = req.body.IdCard
         let doctor = await Doctor.findOne({ IdCard: idCard });
-        if (doctor) {
-            let result = await Room.updateOne(
+        let result = await Room.updateOne(
                 { RoomID: roomId },
                 {
                     $addToSet: {
@@ -40,10 +39,6 @@ class RoomControllers {
                 }
             )
             res.send(doctor);
-        }
-        else {
-            res.send(false);
-        }
     }
 
 }
