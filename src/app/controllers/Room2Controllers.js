@@ -33,32 +33,19 @@ class Room2Controllers {
             numberBHYT: req.body.numberBHYT,
             dateOfBirth: req.body.dateOfBirth
         })
+        let addUser = await newUser.save()
         if (room) {
             let room2 = await Room2.findOne({ RoomId: roomId });
             if (room2) {
-                if (user) {
-                    let result = await Room2.updateOne(
-                        { RoomId: roomId },
-                        {
-                            $addToSet: {
-                                Data: user
-                            }
+                let result = await Room2.updateOne(
+                    { RoomId: roomId },
+                    {
+                        $addToSet: {
+                            Data: user
                         }
-                    )
-                    res.send(true)
-                }
-                else {
-                    let addUser = await newUser.save()
-                    let result = await Room2.updateOne(
-                        { RoomId: roomId },
-                        {
-                            $addToSet: {
-                                Data: user
-                            }
-                        }
-                    )
-                    res.send(true);
-                }
+                    }
+                )
+                res.send(true)
             } else {
                 let newRoom2 = new Room2({
                     RoomId: roomId
