@@ -4,14 +4,15 @@ const Doctor = require("../models/Doctor");
 class RoomControllers {
 
     async create(req, res) {
+        let roomID = req.body.RoomID
         let room = new Room({
-            RoomID: req.body.RoomID,
+            RoomID: roomID,
             RoomMaster: req.body.RoomMaster,
             IdCard: req.body.IdCard
         })
         let result = await room.save()
         if (result) {
-            res.send(req.body.RoomID);
+            res.send(roomID);
         }
     }
 
