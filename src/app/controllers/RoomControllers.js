@@ -4,11 +4,9 @@ const Doctor = require("../models/Doctor");
 class RoomControllers {
 
     async create(req, res) {
-        let idCard = req.body.IdCard
-        let doctor = await Doctor.findOne({ IdCard: idCard })
         let room = new Room({
             RoomID: req.body.RoomID,
-            RoomMaster: doctor.name,
+            RoomMaster: req.body.RoomMaster,
             IdCard: req.body.IdCard
         })
         let result = await room.save()
