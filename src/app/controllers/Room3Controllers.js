@@ -9,7 +9,7 @@ class Room3Controllers {
             let user, firstUser
             let users = room3.Data;
             for (user of users) {
-                if (user.status != 'success') {
+                if (user && user.status != 'success') {
                     firstUser = user
                     idCard = user.IdCard
                     break;
@@ -18,7 +18,7 @@ class Room3Controllers {
             if (firstUser) {
                 const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
                 const updateDocument = {
-                    $set: { "Data.$.status": "success" }
+                    $set: { "Data.$.status": "wait" }
                 };
                 const result = await Room3.updateOne(query, updateDocument);
                 if (result) {
