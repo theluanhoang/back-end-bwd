@@ -19,6 +19,20 @@ class Room2Controllers {
         let roomId = req.body.RoomId
         let idCard = req.body.IdCard
         let room = await Room.findOne({ RoomId: roomId });
+        let newUser = new User({
+            IdCard: idCard,
+            phoneNumber: req.body.phoneNumber,
+            name: req.body.name,
+            gender: req.body.gender,
+            address: req.body.address,
+            province: req.body.province,
+            district: req.body.district,
+            wards: req.body.wards,
+            nationality: req.body.nationality,
+            numberBHYT: req.body.numberBHYT,
+            dateOfBirth: req.body.dateOfBirth
+        })
+        let addUser = await newUser.save()
         if (room) {
             let room2 = await Room2.findOne({ RoomId: roomId });
             if (room2) {
