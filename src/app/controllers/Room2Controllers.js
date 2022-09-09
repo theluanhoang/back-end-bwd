@@ -45,10 +45,18 @@ class Room2Controllers {
                             }
                         }
                     )
-                    res.send(result)
+                    res.send(true)
                 }
                 else {
                     let addUser = await newUser.save()
+                    let result = await Room2.updateOne(
+                        { RoomId: roomId },
+                        {
+                            $addToSet: {
+                                Data: user
+                            }
+                        }
+                    )
                     res.send(true);
                 }
             } else {
