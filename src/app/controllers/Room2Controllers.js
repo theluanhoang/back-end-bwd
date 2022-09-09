@@ -15,98 +15,98 @@ class Room2Controllers {
         }
     }
 
-    async add(req, res) {
-        let roomId = req.body.RoomId
-        let idCard = req.body.IdCard
-        let room = await Room.findOne({ RoomId: roomId });
-        let user = await User.findOne({ IdCard: idCard });
-        let newUser = new User({
-            IdCard: idCard,
-            phoneNumber: req.body.phoneNumber,
-            name: req.body.name,
-            gender: req.body.gender,
-            address: req.body.address,
-            province: req.body.province,
-            district: req.body.district,
-            wards: req.body.wards,
-            nationality: req.body.nationality,
-            numberBHYT: req.body.numberBHYT,
-            dateOfBirth: req.body.dateOfBirth
-        })
-        if (room) {
-            let room2 = await Room2.findOne({ RoomId: roomId });
-            if (room2) {
-                if (user) {
-                    let result = await Room2.updateOne(
-                        { RoomId: roomId },
-                        {
-                            $addToSet: {
-                                Data: user
-                            }
-                        }
-                    )
-                    res.send(true)
-                }
-                else {
-                    let addUser = await newUser.save()
-                    let result = await Room2.updateOne(
-                        { RoomId: roomId },
-                        {
-                            $addToSet: {
-                                Data: user
-                            }
-                        }
-                    )
-                    res.send(true);
-                }
-            } else {
-                let newRoom2 = new Room2({
-                    RoomId: roomId
-                })
+    // async add(req, res) {
+    //     let roomId = req.body.RoomId
+    //     let idCard = req.body.IdCard
+    //     let room = await Room.findOne({ RoomId: roomId });
+    //     let user = await User.findOne({ IdCard: idCard });
+    //     let newUser = new User({
+    //         IdCard: idCard,
+    //         phoneNumber: req.body.phoneNumber,
+    //         name: req.body.name,
+    //         gender: req.body.gender,
+    //         address: req.body.address,
+    //         province: req.body.province,
+    //         district: req.body.district,
+    //         wards: req.body.wards,
+    //         nationality: req.body.nationality,
+    //         numberBHYT: req.body.numberBHYT,
+    //         dateOfBirth: req.body.dateOfBirth
+    //     })
+    //     if (room) {
+    //         let room2 = await Room2.findOne({ RoomId: roomId });
+    //         if (room2) {
+    //             if (user) {
+    //                 let result = await Room2.updateOne(
+    //                     { RoomId: roomId },
+    //                     {
+    //                         $addToSet: {
+    //                             Data: user
+    //                         }
+    //                     }
+    //                 )
+    //                 res.send(true)
+    //             }
+    //             else {
+    //                 let addUser = await newUser.save()
+    //                 let result = await Room2.updateOne(
+    //                     { RoomId: roomId },
+    //                     {
+    //                         $addToSet: {
+    //                             Data: user
+    //                         }
+    //                     }
+    //                 )
+    //                 res.send(true);
+    //             }
+    //         } else {
+    //             let newRoom2 = new Room2({
+    //                 RoomId: roomId
+    //             })
 
-                let result = await newRoom2.save();
+    //             let result = await newRoom2.save();
 
-                if (result) {
-                    let user = await User.findOne({ IdCard: idCard });
-                    if (user) {
-                        let result = await Room2.updateOne(
-                            { RoomId: roomId },
-                            {
-                                $addToSet: {
-                                    Data: user
-                                }
-                            }
-                        )
-                        res.send(result)
-                    }
-                    else {
-                        let addUser = await newUser.save()
-                        let result = await Room2.updateOne(
-                            { RoomId: roomId },
-                            {
-                                $addToSet: {
-                                    Data: user
-                                }
-                            }
-                        )
-                        res.send(true);
-                    }
-                }
-                else {
-                    res.send("Tạo phòng 2 không thành công");
-                }
-            }
+    //             if (result) {
+    //                 let user = await User.findOne({ IdCard: idCard });
+    //                 if (user) {
+    //                     let result = await Room2.updateOne(
+    //                         { RoomId: roomId },
+    //                         {
+    //                             $addToSet: {
+    //                                 Data: user
+    //                             }
+    //                         }
+    //                     )
+    //                     res.send(result)
+    //                 }
+    //                 else {
+    //                     let addUser = await newUser.save()
+    //                     let result = await Room2.updateOne(
+    //                         { RoomId: roomId },
+    //                         {
+    //                             $addToSet: {
+    //                                 Data: user
+    //                             }
+    //                         }
+    //                     )
+    //                     res.send(true);
+    //                 }
+    //             }
+    //             else {
+    //                 res.send("Tạo phòng 2 không thành công");
+    //             }
+    //         }
 
-        }
-        else {
-            res.send("Không tìm thấy phòng");
-        }
-        const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
-        const updateDocument = {
-            $set: { "Data.$.status": "02" }
-        };
-        const result = await Room2.updateOne(query, updateDocument);
-    }
+    //     }
+    //     else {
+    //         res.send("Không tìm thấy phòng");
+    //     }
+    //     const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+    //     const updateDocument = {
+    //         $set: { "Data.$.status": "02" }
+    //     };
+    //     const result = await Room2.updateOne(query, updateDocument);
+    // }
 
     async finish(req, res) {
         let roomId = req.body.RoomId
@@ -201,6 +201,61 @@ class Room2Controllers {
             }
             else {
                 res.send("khong co user");
+            }
+        }
+    }
+
+    async add(req, res) {
+        let idCard = req.body.IdCard;
+        let roomId = req.body.RoomId;
+        let user = new User({
+            IdCard: idCard,
+            phoneNumber: req.body.phoneNumber,
+            name: req.body.name,
+            gender: req.body.gender,
+            address: req.body.address,
+            province: req.body.province,
+            district: req.body.district,
+            wards: req.body.wards,
+            nationality: req.body.nationality,
+            numberBHYT: req.body.numberBHYT,
+            dateOfBirth: req.body.dateOfBirth
+        })
+
+        let addUser = await user.save();
+
+        let room2 = await Room2.findOne({ RoomId: roomId });
+        if (room2) {
+            let result = await Room2.updateOne(
+                { RoomId: roomId },
+                {
+                    $addToSet: {
+                        Data: user
+                    }
+                }
+            )
+            if (result) {
+                res.send(true)
+            }
+        }
+        else {
+            let newRoom2 = new Room2({
+                RoomId: roomId
+            })
+
+            let createRoom2 = await newRoom2.save();
+            if (createRoom2) {
+                let result = await Room2.updateOne(
+                    { RoomId: roomId },
+                    {
+                        $addToSet: {
+                            Data: user
+                        }
+                    }
+                )
+                if (result) {
+                    res.send(true)
+                }
             }
         }
     }
