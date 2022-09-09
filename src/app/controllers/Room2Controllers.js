@@ -37,6 +37,7 @@ class Room2Controllers {
             let room2 = await Room2.findOne({ RoomId: roomId });
             if (room2) {
                 let user = await User.findOne({ IdCard: idCard });
+                console.log(room2)
                 if (user) {
                     let result = await Room2.updateOne(
                         { RoomId: roomId },
@@ -46,6 +47,7 @@ class Room2Controllers {
                             }
                         }
                     )
+                    console.log(user)
                     res.send(result)
                 }
                 else {
