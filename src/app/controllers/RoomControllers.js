@@ -11,9 +11,7 @@ class RoomControllers {
             IdCard: req.body.IdCard
         })
         let result = await room.save()
-        if (result) {
-            res.send(roomID);
-        }
+        res.send(roomID);
     }
 
     async show(req, res) {
