@@ -26,11 +26,11 @@ class Room3Controllers {
                 }
             }
             else {
-                res.send(false);
+                res.send("Khong có user");
             }
         }
         else {
-            res.send(false);
+            res.send("Khong có phòng");
         }
     }
 

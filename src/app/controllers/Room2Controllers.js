@@ -181,28 +181,18 @@ class Room2Controllers {
             let user, firstUser
             let users = room2.Data;
             for (user of users) {
-                if (user && user.status != 'wait') {
-                    firstUser = user
-                    idCard = user.IdCard
-                    break;
-                }
+                firstUser = user
+                idCard = user.IdCard
+                console.log(firstUser)
+                console.log(idCard)
+                break;
             }
             if (firstUser) {
-                const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
-                const updateDocument = {
-                    $set: { "Data.$.status": "wait" }
-                };
-                const result = await Room2.updateOne(query, updateDocument);
-                if (result) {
-                    res.send(firstUser);
-                }
+                res.send(firstUser);
             }
             else {
-                res.send(false);
+                res.send("khong co user");
             }
-        }
-        else {
-            res.send(false);
         }
     }
 
@@ -240,7 +230,7 @@ class Room2Controllers {
                     }
                 }
             )
-                
+
             res.send(true)
         }
         else {
