@@ -2,6 +2,6 @@ const express = require('express')
 const router = express.Router()
 const room3Controllers = require('../app/controllers/Room3Controllers');
 
-router.post('/add-user', room3Controllers.add)
+router.get('/firstUser/:RoomId', room3Controllers.getFirstUser);
 
 module.exports = router
