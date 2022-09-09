@@ -219,7 +219,7 @@ class Room2Controllers {
             wards: req.body.wards,
             nationality: req.body.nationality,
             numberBHYT: req.body.numberBHYT,
-            dateOfBirth: req.body.dateOfBirth
+            dateOfBirth: req.body.dateOfBirth,
         })
 
         let addUser = await user.save();
@@ -234,6 +234,11 @@ class Room2Controllers {
                     }
                 }
             )
+            const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+            const updateDocument = {
+                $set: { "Data.$.status": "02" }
+            };
+            const updatestatus = await Room2.updateOne(query, updateDocument);
             if (result) {
                 res.send(true)
             }
@@ -253,6 +258,11 @@ class Room2Controllers {
                         }
                     }
                 )
+                const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+                const updateDocument = {
+                    $set: { "Data.$.status": "02" }
+                };
+                const updatestatus = await Room2.updateOne(query, updateDocument);
                 if (result) {
                     res.send(true)
                 }
