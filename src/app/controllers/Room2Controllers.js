@@ -226,6 +226,10 @@ class Room2Controllers {
 
         let room2 = await Room2.findOne({ RoomId: roomId });
         if (room2) {
+            const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+            const updateDocument = {
+                $set: { "Data.$.status": "02" }
+            };
             let result = await Room2.updateOne(
                 { RoomId: roomId },
                 {
@@ -234,10 +238,7 @@ class Room2Controllers {
                     }
                 }
             )
-            const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
-            const updateDocument = {
-                $set: { "Data.$.status": "02" }
-            };
+
             const updatestatus = await Room2.updateOne(query, updateDocument);
             if (result) {
                 res.send(true)
@@ -250,6 +251,10 @@ class Room2Controllers {
 
             let createRoom2 = await newRoom2.save();
             if (createRoom2) {
+                const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
+                const updateDocument = {
+                    $set: { "Data.$.status": "02" }
+                };
                 let result = await Room2.updateOne(
                     { RoomId: roomId },
                     {
@@ -258,10 +263,7 @@ class Room2Controllers {
                         }
                     }
                 )
-                const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
-                const updateDocument = {
-                    $set: { "Data.$.status": "02" }
-                };
+
                 const updatestatus = await Room2.updateOne(query, updateDocument);
                 if (result) {
                     res.send(true)
