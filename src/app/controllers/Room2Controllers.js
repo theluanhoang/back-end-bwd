@@ -80,7 +80,16 @@ class Room2Controllers {
                         res.send(result)
                     }
                     else {
-                        res.send("Không tìm thấy user");
+                        let addUser = await newUser.save()
+                        let result = await Room2.updateOne(
+                            { RoomId: roomId },
+                            {
+                                $addToSet: {
+                                    Data: user
+                                }
+                            }
+                        )
+                        res.send(true);
                     }
                 }
                 else {
