@@ -31,14 +31,37 @@ class RoomControllers {
         let idCard = req.body.IdCard
         let doctor = await Doctor.findOne({ IdCard: idCard });
         let result = await Room.updateOne(
-                { RoomID: roomId },
-                {
-                    $addToSet: {
-                        Data: doctor
+            { RoomID: roomId },
+            {
+                $addToSet: {
+                    Data: doctor
+                }
+            }
+        )
+        res.send(doctor);
+    }
+
+    async exit(req, res) {
+        let roomId = req.body.RoomID
+        let idCard = req.body.IdCard
+        let exitRoom = await Room.updateOne(
+            { RoomID: roomId },
+            {
+                $pull: {
+                    Data: {
+                        IdCard: idCard
                     }
                 }
-            )
-            res.send(doctor);
+            }
+        )
+
+        if (exitRoom) {
+            res.send(true);
+        }
+        else {
+            res.send(false);
+        }
+
     }
 
 }
