@@ -9,28 +9,16 @@ class Room3Controllers {
             let user, firstUser
             let users = room3.Data;
             for (user of users) {
-                if (user && user.status != 'success') {
-                    firstUser = user
-                    idCard = user.IdCard
-                    break;
-                }
+                firstUser = user
+                idCard = user.IdCard
+                break;
             }
             if (firstUser) {
-                const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
-                const updateDocument = {
-                    $set: { "Data.$.status": "success" }
-                };
-                const result = await Room3.updateOne(query, updateDocument);
-                if (result) {
-                    res.send(firstUser);
-                }
+                res.send(firstUser);
             }
             else {
-                res.send("Khong có user");
+                res.send("khong co user");
             }
-        }
-        else {
-            res.send("Khong có phòng");
         }
     }
 
