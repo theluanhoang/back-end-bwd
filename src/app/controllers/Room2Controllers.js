@@ -19,6 +19,7 @@ class Room2Controllers {
         let roomId = req.body.RoomId
         let idCard = req.body.IdCard
         let room = await Room.findOne({ RoomId: roomId });
+        let user = await User.findOne({ IdCard: idCard });
         let newUser = new User({
             IdCard: idCard,
             phoneNumber: req.body.phoneNumber,
@@ -32,12 +33,9 @@ class Room2Controllers {
             numberBHYT: req.body.numberBHYT,
             dateOfBirth: req.body.dateOfBirth
         })
-        let addUser = await newUser.save()
         if (room) {
             let room2 = await Room2.findOne({ RoomId: roomId });
             if (room2) {
-                let user = await User.findOne({ IdCard: idCard });
-                console.log(room2)
                 if (user) {
                     let result = await Room2.updateOne(
                         { RoomId: roomId },
@@ -47,11 +45,11 @@ class Room2Controllers {
                             }
                         }
                     )
-                    console.log(user)
                     res.send(result)
                 }
                 else {
-                    res.send("Không tìm thấy user");
+                    let addUser = await newUser.save()
+                    res.send(true);
                 }
             } else {
                 let newRoom2 = new Room2({
