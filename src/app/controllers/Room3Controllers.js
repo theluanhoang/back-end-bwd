@@ -56,6 +56,42 @@ class Room3Controllers {
             res.send(false)
         }
     }
+    async endList(req, res) {
+        let roomId = req.body.RoomId
+        let idCard = req.body.IdCard
+        let user = await User.findOne({ IdCard: idCard })
+
+        if (user) {
+            // Xóa user đó ở vị trí đầu
+            let removeUser = await Room3.updateOne(
+                { RoomId: roomId },
+                {
+                    $pull: {
+                        Data: {
+                            IdCard: idCard
+                        }
+                    }
+                }
+            )
+            // Đẩy xuống cuối list
+
+            let udateUser = await Room3.updateOne(
+                { RoomId: roomId },
+                {
+                    $addToSet: {
+                        Data: user
+                    }
+                }
+            )
+                
+            res.send(true)
+        }
+        else {
+            res.send(false)
+        }
+
+    }
+
 }
 
 module.exports = new Room3Controllers
