@@ -91,7 +91,7 @@ class Room2Controllers {
         }
         else {
             res.send("Không tìm thấy phòng");
-        } 
+        }
         const query = { "RoomId": `${roomId}`, "Data.IdCard": `${idCard}` }
         const updateDocument = {
             $set: { "Data.$.status": "02" }
@@ -211,6 +211,42 @@ class Room2Controllers {
         if (room2) {
             res.send(room2)
         }
+    }
+
+    async delete(req, res) {
+        let roomId = req.body.RoomId
+        let idCard = req.body.IdCard
+        let user = await User.findOne({ IdCard: idCard })
+
+        if (user) {
+            // Xóa user đó ở vị trí đầu
+            let removeUser = await Room2.updateOne(
+                { RoomId: roomId },
+                {
+                    $pull: {
+                        Data: {
+                            IdCard: idCard
+                        }
+                    }
+                }
+            )
+            // Đẩy xuống cuối list
+
+            let udateUser = await Room2.updateOne(
+                { RoomId: roomId },
+                {
+                    $addToSet: {
+                        Data: user
+                    }
+                }
+            )
+                
+            res.send(true)
+        }
+        else {
+            res.send(false)
+        }
+
     }
 
 }

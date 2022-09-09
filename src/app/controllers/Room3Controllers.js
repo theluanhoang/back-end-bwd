@@ -33,6 +33,29 @@ class Room3Controllers {
             res.send(false);
         }
     }
+
+    async delete(req, res) {
+        // Xóa user đó ở vị trí đầu
+        let idCard = req.body.IdCard
+        let roomId = req.body.RoomId
+        let removeUser = await Room3.updateOne(
+            { RoomId: roomId },
+            {
+                $pull: {
+                    Data: {
+                        IdCard: idCard
+                    }
+                }
+            }
+        )
+
+        if (removeUser) {
+            res.send(true);
+        }
+        else {
+            res.send(false)
+        }
+    }
 }
 
 module.exports = new Room3Controllers
