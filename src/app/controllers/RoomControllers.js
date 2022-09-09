@@ -11,7 +11,7 @@ class RoomControllers {
         })
         let result = await room.save()
         if (result) {
-            res.send(doctor);
+            res.send(result);
         }
     }
 
