@@ -192,8 +192,6 @@ class Room2Controllers {
             for (user of users) {
                 firstUser = user
                 idCard = user.IdCard
-                console.log(firstUser)
-                console.log(idCard)
                 break;
             }
             if (firstUser) {
@@ -271,6 +269,8 @@ class Room2Controllers {
             }
         }
     }
+
+
 
     async getListUser(req, res) {
         let room2 = await Room2.find();
