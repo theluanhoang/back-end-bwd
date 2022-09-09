@@ -181,7 +181,7 @@ class Room2Controllers {
             let user, firstUser
             let users = room2.Data;
             for (user of users) {
-                if (user.status != 'wait') {
+                if (user && user.status != 'wait') {
                     firstUser = user
                     idCard = user.IdCard
                     break;
