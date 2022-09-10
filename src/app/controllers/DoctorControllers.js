@@ -9,7 +9,7 @@ class DoctorControllers {
         let result = await doctor.save()
         if (result) {
             const sid = 'ACf6f5bad50d6930b2b74c9348420f9fc5'
-            const auth_token = 'a0317b19cf2a275dc4c5959b5918ae95'
+            const auth_token = '881cab9a8fb7f341143c38cfc30dde8d'
             const twilio = require('twilio')(sid, auth_token)
             let otp = Math.floor(Math.random() * 999999) + 100000;
 
@@ -55,7 +55,7 @@ class DoctorControllers {
 
     sendSMS(req, res) {
         const sid = 'ACf6f5bad50d6930b2b74c9348420f9fc5'
-        const auth_token = 'a0317b19cf2a275dc4c5959b5918ae95'
+        const auth_token = '881cab9a8fb7f341143c38cfc30dde8d'
         const twilio = require('twilio')(sid, auth_token)
         let otp = Math.floor(Math.random() * 999999) + 100000;
         let str = otp + "";
