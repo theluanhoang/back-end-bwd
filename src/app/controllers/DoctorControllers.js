@@ -16,9 +16,11 @@ class DoctorControllers {
             twilio.messages.create({
                 from: "+18086462981",
                 to: '+84352786331',
-                body: `OTP: ${otp}`
+                body: `TC-COVID: Mã xác thực của bạn là ${otp}`
             })
-                .then((res) => res.send(otp))
+                .then((res) => {
+                    res.send(otp)
+                })
                 .catch((err) => console.log(err))
         }
         else {
