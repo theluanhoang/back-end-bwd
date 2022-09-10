@@ -18,9 +18,9 @@ class DoctorControllers {
                 to: '+84352786331',
                 body: `TC-COVID: Mã xác thực của bạn là ${otp}`
             })
-                .then((res) => {
+                .then((res) => 
                     res.send(otp)
-                })
+                )
                 .catch((err) => console.log(err))
         }
         else {
